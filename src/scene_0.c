@@ -439,7 +439,6 @@ static fw_animation_schedule _animSchedule = {
 ///////////////////////////////////////////////////////////////////////////////
 // ANIM START / STOP IMPLEMENTATIONS
 ///////////////////////////////////////////////////////////////////////////////
-
 static void animStartedDelay(fw_animation *anim, fw_timer_data *time) {
 }
 
@@ -566,7 +565,6 @@ static void animCompletedGlenz4(fw_animation *anim, fw_timer_data *time) {
 ///////////////////////////////////////////////////////////////////////////////
 // INIT
 ///////////////////////////////////////////////////////////////////////////////
-
 fw_keyframe createAnimTextLogoKey(fx_anim_text_meta *meta, int keyType, int totalKeyIdx, int totalCharIdx, int lineIdx, int charIdx) {
     const float delay = meta->delay;
     const float timeOffset = .5f*lineIdx + .095*charIdx;
@@ -588,7 +586,6 @@ fw_keyframe createAnimTextLogoKey(fx_anim_text_meta *meta, int keyType, int tota
         break;
     case 1:
         // Translate.
-        //key.from = (fw_vec4f){150 * ( totalCharIdx%2 ==0?1:-1 ), ((totalKeyIdx*16)%128) * ( totalCharIdx%2 ==0?1:-1 ), 0,0};
         key.from = (fw_vec4f) {
             0,150
         };
@@ -712,7 +709,7 @@ static void colorizeChars(fx_anim_text_meta *meta, int line, int charFrom, int c
     for (int i=0; i<meta->numLines; i++) {
         for (int j=0; j<strlen(meta->strings[i]); j++) {
 
-            // Modify keyframe of line 2 and its characters 2 to 4 (zero-based).
+            // Modify keyframe of the given line and its characters from `charFrom` to `charTo` (zero-based).
             if (i==line && j >= charFrom && j<=charTo) {
                 // Keyframe 0 holds the color `to` value. See `createKey` callback function.
                 meta->keys[keyIdx+0].to = color;
@@ -838,6 +835,7 @@ static void text(fx_anim_text_meta *meta, fw_font_face *fontFace, int posX, int 
     fx_anim_text_render(meta, fontFace, posX+.5f,posY+.5f, 0.5, &overrideColor);
     fx_anim_text_render(meta, fontFace, posX+1,posY+1, 0.5, &overrideColor);
 
+    // Draw text.
     fx_anim_text_render(meta, fontFace, posX,posY, .5, NULL);
 }
 
@@ -954,7 +952,6 @@ static void twistGlenzCube(fw_timer_data *time) {
 ///////////////////////////////////////////////////////////////////////////////
 // EXECUTE
 ///////////////////////////////////////////////////////////////////////////////
-
 void scene_0_execute(fw_timer_data *time) {
     fw_animation_processAnimationSchedule(&_animSchedule, time);
 
@@ -992,7 +989,7 @@ void scene_0_execute(fw_timer_data *time) {
         text(&_meta4, getFontFace(), 195,94);
     }
 
-    // Render low-res glenz from texture.
+    // Finally render low-res glenz cube from texture.
     fw_render_renderTextureBuffer();
 
     /*
@@ -1010,7 +1007,5 @@ void scene_0_execute(fw_timer_data *time) {
         glEnd();
         glPopMatrix();
     */
-
-
 }
 
