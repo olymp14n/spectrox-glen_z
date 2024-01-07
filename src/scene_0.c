@@ -1,5 +1,4 @@
 #include "scene_0.h"
-#include <GL/glu.h>
 #include <math.h>
 #include "config/config.h"
 #include "fw/types.h"
@@ -10,7 +9,6 @@
 #include "fw/font.h"
 #include "fw/projection.h"
 #include "resource.h"
-#include "fx/vector_logo.h"
 #include "fx/anim_text.h"
 #include "fx/glenz.h"
 
